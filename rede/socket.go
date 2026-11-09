@@ -7,7 +7,6 @@ import (
 	"strconv"
 )
 
-// manda msg no socket
 func EnviarMensagem(conn net.Conn, msg *Mensagem) error {
 	dados, err := msg.ParaBytes()
 	if err != nil {
@@ -23,7 +22,6 @@ func EnviarMensagem(conn net.Conn, msg *Mensagem) error {
 }
 
 
-// recebe msg do socket
 func LerMensagem(conn net.Conn) (*Mensagem, error) {
 	reader :=  bufio.NewReader(conn)
 	dados, err := reader.ReadBytes('\n')
@@ -47,7 +45,6 @@ func CriarListenerTCP(porta int) (net.Listener, error) {
 	return listener, nil
 }
 
-// addr é io + porta
 func ObterIPePorta(addr net.Addr) (string, int) {
 	host, portaStr, err := net.SplitHostPort(addr.String())
 	if err != nil {
@@ -57,3 +54,20 @@ func ObterIPePorta(addr net.Addr) (string, int) {
 	return host, porta
 }
 
+
+func ConectarTCP(porta int) (net.Conn, error) {
+	endereco := fmt.Sprintf("localhost:%d", porta)
+	conn, err := net.Dial("tcp", endereco)
+	if err != nil {
+		return nil, fmt.Errorf("falha ao conectar na porta %d: %w", porta, err)
+	}
+	return conn, nil
+}
+func EnviarMensagemParaPorta(porta int, msg *Mensagem) error {
+	conn, err := ConectarTCP(porta)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	return EnviarMensagem(conn, msg)
+}
