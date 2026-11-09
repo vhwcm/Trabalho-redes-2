@@ -6,25 +6,22 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"os/exec"
 	"os/signal"
 	"strconv"
 	"syscall"
 )
 
-
-
 type Servidor struct {
-	ID int
-	Porta int
-	IP int
-	Ativo bool
-	Conexoes int
+	ID       int    `json:"id"`
+	IP       string `json:"ip"`
+	Porta    int    `json:"porta"`
+	Status   string `json:"status"`
+	Conexoes int    `json:"conexoes"`
 }
 
 type TabelaServidores struct {
-	TotalConexoes int
-	Servidores []*Servidor
+	TotalConexoes int         `json:"total_conexoes"`
+	Servidores    []*Servidor `json:"servidores"`
 }
 
 var tabela = &TabelaServidores{
@@ -34,7 +31,6 @@ var tabela = &TabelaServidores{
 
 func tabelaServidoresStatus(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	// Serializa a tabela e escreve diretamente no w (corpo da resposta)
 	err := json.NewEncoder(w).Encode(tabela)
 	if err != nil {
 		http.Error(w, "Erro ao gerar JSON", http.StatusInternalServerError)
@@ -42,76 +38,62 @@ func tabelaServidoresStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	flagN := flag.Int("n", 0, "Numero de servidores a serem cirados")
-	portaBase := flag.Int("base",8081, "porta inicial")
-	flag.Parse();
-	
+	flagN := flag.Int("n", 0, "Numero de servidores a serem criados")
+	portaBase := flag.Int("base", 8081, "Porta inicial dos servidores")
+	portaStatus := flag.Int("status-port", 9000, "Porta do /status")
+	flag.Parse()
+
 	totalServidores := *flagN
 
 	if totalServidores <= 0 && len(flag.Args()) > 0 {
 		var err error
 		totalServidores, err = strconv.Atoi(flag.Arg(0))
 		if err != nil || totalServidores <= 0 {
-			fmt.Println("Número inválido de servidores")
-			os.Exit(1);
+			fmt.Println("Erro: informe um número válido de servidores.")
+			os.Exit(1)
 		}
+	}
+
+	if totalServidores <= 0 {
+		fmt.Println("Uso: go run ./servidor <numero_de_servidores>")
+		os.Exit(1)
 	}
 
 	fmt.Printf("Iniciando %d servidores a partir da porta %d...\n\n", totalServidores, *portaBase)
 
-	// array de comandos para que depois a gente possa cancela-los
-	var comandos []*exec.Cmd
-
-	// geração dos servidores
 	for i := 0; i < totalServidores; i++ {
 		porta := *portaBase + i
-	
-		cmd := exec.Command("go", "run", "server.go", fmt.Sprintf("-port=%d",porta))
 
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-
-		servidor := Servidor {
-				ID: i,
-				Porta: porta,
-				IP: porta,
-				Conexoes: 0,
-		}
-		if err := cmd.Start(); err != nil {
-			fmt.Printf("[ERRO] Falha ao iniciar servidor na porta %d: %v\n", porta, err)
-			servidor.Ativo = false
-			continue
-		} else {
-			servidor.Ativo = true
+		servidor := &Servidor{
+			ID:       i + 1,
+			IP:       "127.0.0.1",
+			Porta:    porta,
+			Status:   "DOWN",
+			Conexoes: 0,
 		}
 
-		tabela.Servidores = append(tabela.Servidores, &servidor);
-
-
-		fmt.Printf("Servidor iniciado na porta %d (PID: %d)\n", porta, cmd.Process.Pid)
-		
-		// lista de comandos executados
-		comandos = append(comandos, cmd)
+		tabela.Servidores = append(tabela.Servidores, servidor)
+		go iniciaServer(servidor)
 	}
 
 	http.HandleFunc("/status", tabelaServidoresStatus)
-	// Inicia o servidor HTTP em segundo plano para não travar o script
+
 	go func() {
-		portaStatus := ":9000"
-		if err := http.ListenAndServe(portaStatus, nil); err != nil {
-			fmt.Printf("Erro no servidor de status: %v\n", err)
+		addr := fmt.Sprintf(":%d", *portaStatus)
+		fmt.Printf("\n[STATUS] Endpoint de métricas rodando em http://localhost%s/status\n\n", addr)
+		if err := http.ListenAndServe(addr, nil); err != nil {
+			fmt.Printf("Erro no servidor de status HTTP: %v\n", err)
 		}
 	}()
 
-	sigChan := make(chan os.Signal,1)
+	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+	fmt.Println("Servidores ativos. Pressione Ctrl+C para encerrar.")
 	<-sigChan
-	fmt.Println("\n encerrando....")
-	for _, cmd := range comandos {
-		if cmd.Process != nil {
-			_ = cmd.Process.Kill()
-		}
+
+	for _, s := range tabela.Servidores {
+		s.Status = "DOWN"
 	}
-	
-	fmt.Println("Todos os servidores foram encerrados.")
+	fmt.Println("\nTodos os servidores foram finalizados.")
 }

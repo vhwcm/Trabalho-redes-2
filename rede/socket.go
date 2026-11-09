@@ -8,7 +8,7 @@ import (
 )
 
 // manda msg no socket
-func EnvierMensagem(conn net.Conn, msg *Mensagem) error {
+func EnviarMensagem(conn net.Conn, msg *Mensagem) error {
 	dados, err := msg.ParaBytes()
 	if err != nil {
 		return fmt.Errorf("erro ao converter mensagem para envio: %w", err)

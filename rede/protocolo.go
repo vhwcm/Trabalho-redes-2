@@ -6,20 +6,16 @@ import (
 )
 
 const (
-	TipoRequisicao = "REQ" 
-	TipoResposta   = "RES" 
+	TipoRequisicao = "REQ"
+	TipoResposta   = "RES"
 )
 
 type Mensagem struct {
-	Tipo         string `json:"tipo"`          
-	IPOrigem     string `json:"ip_origem"`     
-	PortaOrigem  int    `json:"porta_origem"`  
-	IPDestino    string `json:"ip_destino"`    
-	PortaDestino int    `json:"porta_destino"` 
-	Conteudo     string `json:"conteudo"`      
+	Tipo     string `json:"tipo"`
+	Porta    int    `json:"porta"`
+	Conteudo string `json:"conteudo"`
 }
 
-// json -> Bytes. \n para marcar o fim
 func (m *Mensagem) ParaBytes() ([]byte, error) {
 	dados, err := json.Marshal(m)
 	if err != nil {
@@ -28,7 +24,6 @@ func (m *Mensagem) ParaBytes() ([]byte, error) {
 	return append(dados, '\n'), nil
 }
 
-// extrair json dos bytes brutos
 func MensagemDosBytes(dados []byte) (*Mensagem, error) {
 	var m Mensagem
 	err := json.Unmarshal(dados, &m)
