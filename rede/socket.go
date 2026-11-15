@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
-	"strconv"
+	"time"
 )
 
 func EnviarMensagem(conn net.Conn, msg *Mensagem) error {
@@ -21,9 +21,8 @@ func EnviarMensagem(conn net.Conn, msg *Mensagem) error {
 	return nil
 }
 
-
 func LerMensagem(conn net.Conn) (*Mensagem, error) {
-	reader :=  bufio.NewReader(conn)
+	reader := bufio.NewReader(conn)
 	dados, err := reader.ReadBytes('\n')
 	if err != nil {
 		return nil, fmt.Errorf("erro ao ler do socket: %w", err)
@@ -45,16 +44,6 @@ func CriarListenerTCP(porta int) (net.Listener, error) {
 	return listener, nil
 }
 
-func ObterIPePorta(addr net.Addr) (string, int) {
-	host, portaStr, err := net.SplitHostPort(addr.String())
-	if err != nil {
-		return "", 0
-	}
-	porta, _ := strconv.Atoi(portaStr)
-	return host, porta
-}
-
-
 func ConectarTCP(porta int) (net.Conn, error) {
 	endereco := fmt.Sprintf("localhost:%d", porta)
 	conn, err := net.Dial("tcp", endereco)
@@ -63,11 +52,12 @@ func ConectarTCP(porta int) (net.Conn, error) {
 	}
 	return conn, nil
 }
-func EnviarMensagemParaPorta(porta int, msg *Mensagem) error {
-	conn, err := ConectarTCP(porta)
+
+func ConectarTCPTimeout(porta int, timeout time.Duration) (net.Conn, error) {
+	endereco := fmt.Sprintf("localhost:%d", porta)
+	conn, err := net.DialTimeout("tcp", endereco, timeout)
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("falha ao conectar na porta %d: %w", porta, err)
 	}
-	defer conn.Close()
-	return EnviarMensagem(conn, msg)
+	return conn, nil
 }

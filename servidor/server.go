@@ -1,27 +1,96 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"net"
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
+	"sync"
+	"sync/atomic"
 	"syscall"
 	"trabalho-redes/rede"
 )
 
 const response = "KamehamehameHAAAAAAAAAA"
 
-func iniciaServidorIndividual(id, porta int) {
-	listener, err := rede.CriarListenerTCP(porta)
+var conexoesAtivas atomic.Int64
+
+func atenderConexao(c net.Conn, porta int, mensagemResp *rede.Mensagem, wg *sync.WaitGroup) {
+	defer wg.Done()
+	defer c.Close()
+
+	msg, err := rede.LerMensagem(c)
 	if err != nil {
-		fmt.Printf("[ERRO] Falha ao iniciar servidor ID %d na porta %d: %v\n", id, porta, err)
 		return
 	}
-	defer listener.Close()
 
-	fmt.Printf("[Servidor ID %d] Ativo e ouvindo na porta %d\n", id, porta)
+	if msg.Tipo == rede.TipoPing || strings.TrimSpace(msg.Conteudo) == "PING" {
+		respPing := &rede.Mensagem{
+			Tipo:     rede.TipoResposta,
+			Porta:    porta,
+			Conteudo: strconv.FormatInt(conexoesAtivas.Load(), 10),
+		}
+		_ = rede.EnviarMensagem(c, respPing)
+		return
+	}
+
+	conexoesAtivas.Add(1)
+	defer conexoesAtivas.Add(-1)
+
+	tag := fmt.Sprintf("Servidor :%d", porta)
+	for {
+		rede.Log(tag, "Requisição atendida (conexões ativas: %d): %+v", conexoesAtivas.Load(), msg)
+		if err := rede.EnviarMensagem(c, mensagemResp); err != nil {
+			return
+		}
+
+		msg, err = rede.LerMensagem(c)
+		if err != nil {
+			return
+		}
+	}
+}
+
+func main() {
+	flagPorta := flag.Int("port", 8081, "Porta TCP do servidor")
+	flag.Parse()
+
+	porta := *flagPorta
+	if flag.NArg() > 0 {
+		val, err := strconv.Atoi(flag.Arg(0))
+		if err != nil || val <= 0 {
+			fmt.Fprintln(os.Stderr, "Erro: informe uma porta válida para o servidor.")
+			os.Exit(1)
+		}
+		porta = val
+	}
+
+	if porta <= 0 {
+		fmt.Fprintln(os.Stderr, "Uso: go run ./servidor [-port <porta>]")
+		os.Exit(1)
+	}
+
+	tag := fmt.Sprintf("Servidor :%d", porta)
+	listener, err := rede.CriarListenerTCP(porta)
+	if err != nil {
+		rede.LogErro(tag, "Falha ao iniciar na porta %d: %v", porta, err)
+		os.Exit(1)
+	}
+
+	rede.Log(tag, "Ativo e ouvindo...")
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+
+	go func() {
+		<-sigChan
+		rede.Log(tag, "Encerrando...")
+		_ = listener.Close()
+	}()
 
 	mensagemResp := &rede.Mensagem{
 		Tipo:     rede.TipoResposta,
@@ -29,59 +98,20 @@ func iniciaServidorIndividual(id, porta int) {
 		Conteudo: response,
 	}
 
+	var wg sync.WaitGroup
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
+			if errors.Is(err, net.ErrClosed) {
+				break
+			}
 			continue
 		}
 
-		go func(c net.Conn) {
-			defer c.Close()
-
-			msg, err := rede.LerMensagem(c)
-			if err != nil {
-				return
-			}
-
-			fmt.Printf("[Servidor :%d] Requisição atendida: %+v\n", porta, msg)
-			rede.EnviarMensagem(c, mensagemResp)
-		}(conn)
-	}
-}
-
-func main() {
-	flagN := flag.Int("n", 0, "Numero de servidores a serem criados")
-	portaBase := flag.Int("base", 8081, "Porta inicial dos servidores")
-	flag.Parse()
-
-	totalServidores := *flagN
-
-	if totalServidores <= 0 && len(flag.Args()) > 0 {
-		var err error
-		totalServidores, err = strconv.Atoi(flag.Arg(0))
-		if err != nil || totalServidores <= 0 {
-			fmt.Println("Erro: informe um número válido de servidores.")
-			os.Exit(1)
-		}
+		wg.Add(1)
+		go atenderConexao(conn, porta, mensagemResp, &wg)
 	}
 
-	if totalServidores <= 0 {
-		fmt.Println("Uso: go run ./servidor <numero_de_servidores>")
-		os.Exit(1)
-	}
-
-	fmt.Printf("Iniciando %d servidores simples a partir da porta %d...\n\n", totalServidores, *portaBase)
-
-	for i := 0; i < totalServidores; i++ {
-		porta := *portaBase + i
-		go iniciaServidorIndividual(i+1, porta)
-	}
-
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
-
-	fmt.Println("Servidores em execução. Pressione Ctrl+C para encerrar.")
-	<-sigChan
-
-	fmt.Println("\nTodos os servidores foram encerrados.")
+	wg.Wait()
+	rede.Log(tag, "Encerrado.")
 }

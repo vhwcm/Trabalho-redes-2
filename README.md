@@ -1,85 +1,67 @@
-# Trabalho de Redes II - Balanceador de Carga TCP (Least Connections)
+# Trabalho de Redes II - Balanceador de Carga TCP
 
-Arquitetura distribuída com processos completamente desacoplados utilizando exclusivamente sockets TCP em Go (`net`) com serialização em JSON delimitada por `\n`.
+Arquitetura distribuída com processos desacoplados utilizando exclusivamente sockets TCP em Go (`net`) com serialização em JSON delimitada por `\n` (pacote [`rede`](file:///home/vhwcm/Trabalho-redes-2/rede/socket.go)).
+
+Para o histórico completo de decisões de projeto, veja [`DECISOES.md`](file:///home/vhwcm/Trabalho-redes-2/DECISOES.md).
 
 ---
 
-## 🗺️ Arquitetura e Diagrama de Conexões
+## Arquitetura e Diagrama de Conexões
 
 ```mermaid
 flowchart TD
-    subgraph Clientes ["Processo: Cliente"]
-        C1["cliente/clientes.go"]
+    subgraph Clientes ["Processos: N Clientes"]
+        C1["cliente/cliente.go (porta efêmera)"]
     end
 
-    subgraph LB ["Processo: Load Balancer"]
+    subgraph LB ["Processo: 1 Load Balancer"]
         LoadBalancer["loadBalance/loadBalancer.go (:8080)
-        Algoritmo: Least Connections"]
+        Políticas: Round-Robin | Least Connections"]
     end
 
-    subgraph Estado ["Processo: Tabela de Servidores"]
-        Tab["tabela/tabela.go (:9000)
-        Guarda Status, IP/Porta e Conexões"]
+    subgraph Monitoramento ["Processo: 1 Monitor e Tabela de Servidores"]
+        Mon["monitor/monitor.go (:9000 fixa)
+        Health Check PING + Tabela RAM + Auto-recuperação (5s)"]
     end
 
-    subgraph Monitoramento ["Processo: Monitor"]
-        Mon["monitor/monitor.go
-        Health Check TCP contínuo"]
-    end
-
-    subgraph Backends ["Processos: Servidores Backend"]
-        S1["servidor 1 (:8081)"]
-        S2["servidor 2 (:8082)"]
-        SN["servidor N (:8080 + N)"]
+    subgraph Backends ["Processos: M Servidores Backend"]
+        S1["servidor/server.go (:8081)"]
+        S2["servidor/server.go (:8082)"]
+        SM["servidor/server.go (:8080 + M)"]
     end
 
     %% Fluxo de Clientes e Repasse
     C1 -->|"1. Conecta TCP (:8080)"| LoadBalancer
-    LoadBalancer -->|"2. Consulta Menor Conexão (:9000)"| Tab
-    LoadBalancer -->|"3. Repassa Conexão (:8081..N)"| S1
-    LoadBalancer -->|"3. Repassa Conexão (:8081..N)"| S2
+    LoadBalancer -->|"2. Consulta Tabela / Atualiza Conexões (:9000)"| Mon
+    LoadBalancer -->|"3. Repassa Conexão (:8081..)"| S1
+    LoadBalancer -->|"3. Repassa Conexão (:8081..)"| S2
 
     %% Fluxo do Monitor
-    Mon -.->|"Checa Socket TCP"| S1
-    Mon -.->|"Checa Socket TCP"| S2
-    Mon -->|"Atualiza SET_STATUS (:9000)"| Tab
+    Mon -.->|"PING periódico + Recuperação 5s"| S1
+    Mon -.->|"PING periódico + Recuperação 5s"| S2
 ```
 
 ---
 
-## 🧩 Os 5 Processos do Sistema
+## Processos do Sistema
 
 | Processo / Binário | Porta | Função |
 | :--- | :--- | :--- |
-| **`servidor/server.go`** | `:8081` a `:8080+N` | Executa os servidores backend de trabalho. |
-| **`tabela/tabela.go`** | `:9000` | Processo de estado. Mantém a tabela em RAM com IP, porta, status (UP/DOWN) e conexões de cada servidor. |
-| **`monitor/monitor.go`** | - | Processo de health check. Testa se as portas dos servidores estão abertas e avisa a Tabela (`SET_STATUS`). |
-| **`loadBalance/loadBalancer.go`** | `:8080` | Balanceador de carga. Consulta a Tabela para escolher o servidor com **Least Connections** e repassa o cliente. |
-| **`cliente/clientes.go`** | Efêmera | Envia requisições para a porta `:8080` do Load Balancer. |
+| **`servidor/server.go`** | `:8081` a `:8080+M` | Executa 1 servidor backend por processo (`-port`), mantendo contador atômico de conexões ativas e respondendo a `PING` e requisições de clientes. |
+| **`monitor/monitor.go`** | `:9000` (fixa) | Processo unificado de health check (`PING`), tabela de servidores em RAM (`IP`, `Porta`, `Status`, `Conexoes`, `TotalConexoes`) e auto-recuperação de servidores caídos a cada `5s`. |
+| **`loadBalance/loadBalancer.go`** | `:8080` | Balanceador de carga TCP concorrente com políticas **Round-Robin** (`-politica round-robin`) e **Least Connections** (`-politica least-connections`). |
+| **`cliente/cliente.go`** | Efêmera | Conecta apenas no Load Balancer (`:8080`) e envia dados por `K` segundos fixos (`-k`) ou variáveis (`-k-min` e `-k-max`). |
 
 ---
 
-## 🚀 Como Executar o Sistema
+## Execução e Logs
 
-Abra terminais separados para rodar cada processo:
-
-### 1. Iniciar a Tabela de Servidores (Processo de Estado)
 ```bash
-go run ./tabela -n=3 -base=8081 -port=9000
+# Subir ambiente completo com política Least Connections e clientes com duração variável (2s a 6s)
+go run ./scripts/geral.go -n 4 -m 3 -politica least-connections -k-min 2 -k-max 6
+
+# Subir ambiente completo com política Round-Robin e duração fixa (5s)
+go run ./scripts/geral.go -n 4 -m 3 -politica round-robin -k 5
 ```
 
-### 2. Iniciar os Servidores Backend
-```bash
-go run ./servidor 3
-```
-
-### 3. Iniciar o Monitor (Health Check)
-```bash
-go run ./monitor -n=3 -base=8081 -tabela-port=9000
-```
-*(O monitor começará a checar os servidores e atualizar a tabela com `UP` ou `DOWN`).*
-
-### 4. Consultar a Tabela em Tempo Real (Via TCP)
-```bash
-python3 -c "import socket; s = socket.socket(); s.connect(('localhost', 9000)); s.send(b'{\"tipo\":\"REQ\",\"conteudo\":\"GET_STATUS\"}\n'); print(s.recv(2048).decode()); s.close()"
-```
+Todos os processos registram os eventos de execução simultaneamente no terminal e no arquivo [`log.txt`](file:///home/vhwcm/Trabalho-redes-2/log.txt).

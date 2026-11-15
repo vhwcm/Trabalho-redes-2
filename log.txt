@@ -1,0 +1,415 @@
+[2026-11-15 17:51:10.331] [CENARIO] Iniciando Cenario 1 - Round-Robin (round-robin)
+[2026-11-15 17:51:10.333] [LB] Ativo na porta :8080 | Política: round-robin | Monitor: :9000
+[2026-11-15 17:51:10.586] [Servidor :18081] Ativo e ouvindo...
+[2026-11-15 17:51:10.586] [Servidor :18083] Ativo e ouvindo...
+[2026-11-15 17:51:10.586] [Servidor :18082] Ativo e ouvindo...
+[2026-11-15 17:51:10.598] [MONITOR] Ativo na porta fixa 9000 gerenciando 3 servidores (portas 18081 a 18083)...
+[2026-11-15 17:51:10.599] [MONITOR] Servidor :18083 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:10.599] [MONITOR] Servidor :18081 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:10.599] [MONITOR] Servidor :18082 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:10.885] [Cliente 77841] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.887] [Cliente 77840] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.888] [Cliente 77844] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.889] [Cliente 77846] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.889] [Cliente 77842] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.890] [LB] Nova conexão ([::1]:56002) -> Servidor :18083 [política=round-robin, conexões=0]
+[2026-11-15 17:51:10.890] [LB] Nova conexão ([::1]:55980) -> Servidor :18081 [política=round-robin, conexões=0]
+[2026-11-15 17:51:10.890] [LB] Nova conexão ([::1]:55990) -> Servidor :18082 [política=round-robin, conexões=0]
+[2026-11-15 17:51:10.890] [Cliente 77868] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:10.891] [LB] Nova conexão ([::1]:56014) -> Servidor :18081 [política=round-robin, conexões=0]
+[2026-11-15 17:51:10.891] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77841}
+[2026-11-15 17:51:10.892] [LB] Nova conexão ([::1]:56020) -> Servidor :18082 [política=round-robin, conexões=0]
+[2026-11-15 17:51:10.892] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77840}
+[2026-11-15 17:51:10.892] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77842}
+[2026-11-15 17:51:10.892] [Cliente 77842] Req #1 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:10.892] [Cliente 77841] Req #1 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:10.892] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77844}
+[2026-11-15 17:51:10.892] [LB] Nova conexão ([::1]:56026) -> Servidor :18083 [política=round-robin, conexões=1]
+[2026-11-15 17:51:10.893] [Cliente 77840] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:10.893] [Cliente 77844] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:10.893] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77846}
+[2026-11-15 17:51:10.893] [Cliente 77846] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:10.893] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 77868}
+[2026-11-15 17:51:10.893] [Cliente 77868] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.293] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77842}
+[2026-11-15 17:51:11.293] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77841}
+[2026-11-15 17:51:11.293] [Cliente 77842] Req #2 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.293] [Cliente 77841] Req #2 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.293] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77840}
+[2026-11-15 17:51:11.293] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77844}
+[2026-11-15 17:51:11.293] [Cliente 77840] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.293] [Cliente 77844] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.293] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77846}
+[2026-11-15 17:51:11.294] [Cliente 77846] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.294] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 77868}
+[2026-11-15 17:51:11.294] [Cliente 77868] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77844}
+[2026-11-15 17:51:11.694] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77841}
+[2026-11-15 17:51:11.694] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77840}
+[2026-11-15 17:51:11.694] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77842}
+[2026-11-15 17:51:11.694] [Cliente 77841] Req #3 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Cliente 77840] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Cliente 77844] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77846}
+[2026-11-15 17:51:11.694] [Cliente 77842] Req #3 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Cliente 77846] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:11.694] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 77868}
+[2026-11-15 17:51:11.695] [Cliente 77868] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77844}
+[2026-11-15 17:51:12.095] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77841}
+[2026-11-15 17:51:12.095] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77842}
+[2026-11-15 17:51:12.095] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77840}
+[2026-11-15 17:51:12.095] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77846}
+[2026-11-15 17:51:12.095] [Cliente 77841] Req #4 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Cliente 77842] Req #4 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Cliente 77846] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 77868}
+[2026-11-15 17:51:12.095] [Cliente 77840] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Cliente 77844] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.095] [Cliente 77868] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.496] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77841}
+[2026-11-15 17:51:12.496] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77846}
+[2026-11-15 17:51:12.496] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77840}
+[2026-11-15 17:51:12.496] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77844}
+[2026-11-15 17:51:12.496] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77842}
+[2026-11-15 17:51:12.496] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 77868}
+[2026-11-15 17:51:12.496] [Cliente 77841] Req #5 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.497] [Cliente 77842] Req #5 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.497] [Cliente 77846] Req #5 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.497] [Cliente 77840] Req #5 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.497] [Cliente 77844] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.497] [Cliente 77868] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.897] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77841}
+[2026-11-15 17:51:12.897] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77844}
+[2026-11-15 17:51:12.897] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77842}
+[2026-11-15 17:51:12.897] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77846}
+[2026-11-15 17:51:12.898] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77868}
+[2026-11-15 17:51:12.898] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 77840}
+[2026-11-15 17:51:12.898] [Cliente 77841] Req #6 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.898] [Cliente 77844] Req #6 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.898] [Cliente 77846] Req #6 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.898] [Cliente 77842] Req #6 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.898] [Cliente 77868] Req #6 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:12.898] [Cliente 77840] Req #6 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77840}
+[2026-11-15 17:51:13.299] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77844}
+[2026-11-15 17:51:13.299] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77842}
+[2026-11-15 17:51:13.299] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77841}
+[2026-11-15 17:51:13.299] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77846}
+[2026-11-15 17:51:13.299] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 77868}
+[2026-11-15 17:51:13.299] [Cliente 77846] Req #7 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Cliente 77840] Req #7 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Cliente 77842] Req #7 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Cliente 77868] Req #7 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Cliente 77841] Req #7 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.299] [Cliente 77844] Req #7 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77868}
+[2026-11-15 17:51:13.700] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77840}
+[2026-11-15 17:51:13.700] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77841}
+[2026-11-15 17:51:13.700] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77846}
+[2026-11-15 17:51:13.700] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77844}
+[2026-11-15 17:51:13.700] [Servidor :18081] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 77842}
+[2026-11-15 17:51:13.700] [Cliente 77841] Req #8 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Cliente 77868] Req #8 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Cliente 77868] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.700] [Cliente 77841] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.700] [Cliente 77846] Req #8 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Cliente 77844] Req #8 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Cliente 77840] Req #8 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.700] [Cliente 77846] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.700] [Cliente 77844] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.701] [Cliente 77840] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.701] [Cliente 77842] Req #8 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:13.701] [Cliente 77842] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:13.703] [CENARIO] Finalizando Cenario 1 - Round-Robin (duração=3.37s)
+[2026-11-15 17:51:13.704] [MONITOR] Encerrando...
+[2026-11-15 17:51:13.704] [LB] Encerrando...
+[2026-11-15 17:51:13.704] [MONITOR] Encerrado.
+[2026-11-15 17:51:13.704] [LB] Encerrado.
+[2026-11-15 17:51:13.704] [Servidor :18081] Encerrando...
+[2026-11-15 17:51:13.704] [Servidor :18083] Encerrando...
+[2026-11-15 17:51:13.704] [Servidor :18081] Encerrado.
+[2026-11-15 17:51:13.704] [Servidor :18083] Encerrado.
+[2026-11-15 17:51:13.705] [Servidor :18082] Encerrando...
+[2026-11-15 17:51:13.705] [Servidor :18082] Encerrado.
+[2026-11-15 17:51:13.709] [CENARIO] Iniciando Cenario 2 - Least Connections (least-connections)
+[2026-11-15 17:51:13.711] [LB] Ativo na porta :8080 | Política: least-connections | Monitor: :9000
+[2026-11-15 17:51:13.916] [Servidor :18083] Ativo e ouvindo...
+[2026-11-15 17:51:13.916] [Servidor :18082] Ativo e ouvindo...
+[2026-11-15 17:51:13.916] [Servidor :18081] Ativo e ouvindo...
+[2026-11-15 17:51:13.921] [MONITOR] Ativo na porta fixa 9000 gerenciando 3 servidores (portas 18081 a 18083)...
+[2026-11-15 17:51:13.922] [MONITOR] Servidor :18083 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:13.922] [MONITOR] Servidor :18082 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:13.922] [MONITOR] Servidor :18081 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:14.012] [CENARIO] Disparando Onda 1: 2 clientes longos (5s)
+[2026-11-15 17:51:14.254] [Cliente 78252] Conectado ao Load Balancer na porta :8080 por 5s...
+[2026-11-15 17:51:14.254] [Cliente 78253] Conectado ao Load Balancer na porta :8080 por 5s...
+[2026-11-15 17:51:14.255] [LB] Nova conexão ([::1]:56034) -> Servidor :18082 [política=least-connections, conexões=0]
+[2026-11-15 17:51:14.255] [LB] Nova conexão ([::1]:56032) -> Servidor :18081 [política=least-connections, conexões=0]
+[2026-11-15 17:51:14.255] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78253}
+[2026-11-15 17:51:14.255] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78252}
+[2026-11-15 17:51:14.255] [Cliente 78253] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:14.255] [Cliente 78252] Req #1 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:14.656] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78252}
+[2026-11-15 17:51:14.656] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78253}
+[2026-11-15 17:51:14.656] [Cliente 78253] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:14.656] [Cliente 78252] Req #2 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.057] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78252}
+[2026-11-15 17:51:15.057] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78253}
+[2026-11-15 17:51:15.058] [Cliente 78253] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.058] [Cliente 78252] Req #3 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.458] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78252}
+[2026-11-15 17:51:15.458] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78253}
+[2026-11-15 17:51:15.459] [Cliente 78253] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.459] [Cliente 78252] Req #4 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.513] [CENARIO] Disparando Onda 2: 4 clientes de duração variável (2s a 3s)
+[2026-11-15 17:51:15.706] [Cliente 78391] Conectado ao Load Balancer na porta :8080 por 2s...
+[2026-11-15 17:51:15.706] [Cliente 78393] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:15.706] [Cliente 78392] Conectado ao Load Balancer na porta :8080 por 2s...
+[2026-11-15 17:51:15.707] [Cliente 78394] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:15.707] [LB] Nova conexão ([::1]:56054) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:15.707] [LB] Nova conexão ([::1]:56046) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:15.707] [LB] Nova conexão ([::1]:56056) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:15.707] [LB] Nova conexão ([::1]:56050) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:15.707] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78394}
+[2026-11-15 17:51:15.708] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78392}
+[2026-11-15 17:51:15.708] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78391}
+[2026-11-15 17:51:15.708] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78393}
+[2026-11-15 17:51:15.708] [Cliente 78394] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.708] [Cliente 78392] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.708] [Cliente 78393] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.708] [Cliente 78391] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.859] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78252}
+[2026-11-15 17:51:15.859] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78253}
+[2026-11-15 17:51:15.860] [Cliente 78252] Req #5 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:15.860] [Cliente 78253] Req #5 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.109] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78392}
+[2026-11-15 17:51:16.109] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78394}
+[2026-11-15 17:51:16.109] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78391}
+[2026-11-15 17:51:16.109] [Cliente 78392] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.109] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78393}
+[2026-11-15 17:51:16.109] [Cliente 78394] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.109] [Cliente 78391] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.109] [Cliente 78393] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.260] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78253}
+[2026-11-15 17:51:16.260] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78252}
+[2026-11-15 17:51:16.260] [Cliente 78253] Req #6 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.261] [Cliente 78252] Req #6 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.510] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78392}
+[2026-11-15 17:51:16.510] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78394}
+[2026-11-15 17:51:16.510] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78393}
+[2026-11-15 17:51:16.510] [Cliente 78392] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.510] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78391}
+[2026-11-15 17:51:16.510] [Cliente 78393] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.510] [Cliente 78394] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.510] [Cliente 78391] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.661] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78252}
+[2026-11-15 17:51:16.661] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78253}
+[2026-11-15 17:51:16.661] [Cliente 78253] Req #7 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.661] [Cliente 78252] Req #7 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.911] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78392}
+[2026-11-15 17:51:16.911] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78393}
+[2026-11-15 17:51:16.911] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78394}
+[2026-11-15 17:51:16.911] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78391}
+[2026-11-15 17:51:16.911] [Cliente 78392] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.911] [Cliente 78393] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.912] [Cliente 78394] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:16.912] [Cliente 78391] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.062] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78252}
+[2026-11-15 17:51:17.062] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78253}
+[2026-11-15 17:51:17.062] [Cliente 78252] Req #8 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.062] [Cliente 78253] Req #8 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.312] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78392}
+[2026-11-15 17:51:17.312] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78391}
+[2026-11-15 17:51:17.312] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78394}
+[2026-11-15 17:51:17.312] [Cliente 78392] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.313] [Cliente 78392] Conexão finalizada após 5 requisições (2s).
+[2026-11-15 17:51:17.312] [Servidor :18083] Requisição atendida (conexões ativas: 4): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78393}
+[2026-11-15 17:51:17.313] [Cliente 78391] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.313] [Cliente 78391] Conexão finalizada após 5 requisições (2s).
+[2026-11-15 17:51:17.313] [Cliente 78394] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.313] [Cliente 78393] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.463] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #9 do cliente 78252}
+[2026-11-15 17:51:17.463] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #9 do cliente 78253}
+[2026-11-15 17:51:17.463] [Cliente 78253] Req #9 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.463] [Cliente 78252] Req #9 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.714] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78394}
+[2026-11-15 17:51:17.714] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78393}
+[2026-11-15 17:51:17.714] [Cliente 78394] Req #6 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.714] [Cliente 78393] Req #6 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.864] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #10 do cliente 78252}
+[2026-11-15 17:51:17.864] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #10 do cliente 78253}
+[2026-11-15 17:51:17.864] [Cliente 78252] Req #10 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:17.864] [Cliente 78253] Req #10 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.115] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78394}
+[2026-11-15 17:51:18.115] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78393}
+[2026-11-15 17:51:18.115] [Cliente 78394] Req #7 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.115] [Cliente 78393] Req #7 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.265] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #11 do cliente 78253}
+[2026-11-15 17:51:18.265] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #11 do cliente 78252}
+[2026-11-15 17:51:18.265] [Cliente 78253] Req #11 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.265] [Cliente 78252] Req #11 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.516] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78393}
+[2026-11-15 17:51:18.516] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78394}
+[2026-11-15 17:51:18.516] [Cliente 78393] Req #8 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.516] [Cliente 78393] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:18.516] [Cliente 78394] Req #8 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.516] [Cliente 78394] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:18.666] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #12 do cliente 78253}
+[2026-11-15 17:51:18.666] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #12 do cliente 78252}
+[2026-11-15 17:51:18.666] [Cliente 78252] Req #12 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:18.666] [Cliente 78253] Req #12 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:19.067] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #13 do cliente 78252}
+[2026-11-15 17:51:19.067] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #13 do cliente 78253}
+[2026-11-15 17:51:19.067] [Cliente 78252] Req #13 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:19.067] [Cliente 78252] Conexão finalizada após 13 requisições (5s).
+[2026-11-15 17:51:19.067] [Cliente 78253] Req #13 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:19.067] [Cliente 78253] Conexão finalizada após 13 requisições (5s).
+[2026-11-15 17:51:19.068] [CENARIO] Finalizando Cenario 2 - Least Connections (duração=5.36s)
+[2026-11-15 17:51:19.068] [MONITOR] Encerrando...
+[2026-11-15 17:51:19.068] [LB] Encerrando...
+[2026-11-15 17:51:19.068] [MONITOR] Encerrado.
+[2026-11-15 17:51:19.069] [LB] Encerrado.
+[2026-11-15 17:51:19.069] [Servidor :18081] Encerrando...
+[2026-11-15 17:51:19.069] [Servidor :18083] Encerrando...
+[2026-11-15 17:51:19.069] [Servidor :18082] Encerrando...
+[2026-11-15 17:51:19.069] [Servidor :18083] Encerrado.
+[2026-11-15 17:51:19.069] [Servidor :18081] Encerrado.
+[2026-11-15 17:51:19.069] [Servidor :18082] Encerrado.
+[2026-11-15 17:51:19.072] [CENARIO] Iniciando Cenario 3 - Falha e Auto-Recuperacao (least-connections)
+[2026-11-15 17:51:19.074] [LB] Ativo na porta :8080 | Política: least-connections | Monitor: :9000
+[2026-11-15 17:51:19.277] [Servidor :18081] Ativo e ouvindo...
+[2026-11-15 17:51:19.277] [Servidor :18083] Ativo e ouvindo...
+[2026-11-15 17:51:19.277] [Servidor :18082] Ativo e ouvindo...
+[2026-11-15 17:51:19.283] [MONITOR] Ativo na porta fixa 9000 gerenciando 3 servidores (portas 18081 a 18083)...
+[2026-11-15 17:51:19.284] [MONITOR] Servidor :18083 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:19.284] [MONITOR] Servidor :18081 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:19.284] [MONITOR] Servidor :18082 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:19.375] [CENARIO] Disparando Onda 1: 3 clientes iniciais (3s)
+[2026-11-15 17:51:19.608] [Cliente 78809] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:19.608] [Cliente 78808] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:19.608] [Cliente 78807] Conectado ao Load Balancer na porta :8080 por 3s...
+[2026-11-15 17:51:19.609] [LB] Nova conexão ([::1]:47842) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:19.609] [LB] Nova conexão ([::1]:47840) -> Servidor :18081 [política=least-connections, conexões=0]
+[2026-11-15 17:51:19.609] [LB] Nova conexão ([::1]:47844) -> Servidor :18082 [política=least-connections, conexões=0]
+[2026-11-15 17:51:19.609] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78807}
+[2026-11-15 17:51:19.609] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78808}
+[2026-11-15 17:51:19.609] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78809}
+[2026-11-15 17:51:19.609] [Cliente 78807] Req #1 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:19.609] [Cliente 78809] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:19.609] [Cliente 78808] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.010] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78808}
+[2026-11-15 17:51:20.010] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78807}
+[2026-11-15 17:51:20.010] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78809}
+[2026-11-15 17:51:20.010] [Cliente 78807] Req #2 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.010] [Cliente 78808] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.010] [Cliente 78809] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.411] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78807}
+[2026-11-15 17:51:20.411] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78808}
+[2026-11-15 17:51:20.411] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78809}
+[2026-11-15 17:51:20.411] [Cliente 78807] Req #3 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.411] [Cliente 78809] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.411] [Cliente 78808] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.576] [CENARIO] FALHA INJETADA: derrubando servidor na porta :18081 (SIGKILL)
+[2026-11-15 17:51:20.812] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78809}
+[2026-11-15 17:51:20.812] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78808}
+[2026-11-15 17:51:20.812] [Cliente 78808] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.812] [Cliente 78809] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:20.812] [Cliente 78807] Req #4 <- Servidor :8080 | ERRO: servidor :18081 desconectou
+[2026-11-15 17:51:21.212] [Cliente 78807] Erro ao ler resposta da req #5: erro ao ler do socket: EOF
+[2026-11-15 17:51:21.213] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78808}
+[2026-11-15 17:51:21.213] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 78809}
+[2026-11-15 17:51:21.213] [Cliente 78808] Req #5 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.213] [Cliente 78809] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.285] [MONITOR] Servidor :18081 mudou status: UP -> DOWN (conexões=0)
+[2026-11-15 17:51:21.378] [CENARIO] Disparando Onda 2 (durante falha de :18081, detectada em 0.80s): 2 clientes (1s)
+[2026-11-15 17:51:21.599] [Cliente 78947] Conectado ao Load Balancer na porta :8080 por 1s...
+[2026-11-15 17:51:21.599] [Cliente 78948] Conectado ao Load Balancer na porta :8080 por 1s...
+[2026-11-15 17:51:21.599] [LB] Nova conexão ([::1]:47872) -> Servidor :18083 [política=least-connections, conexões=1]
+[2026-11-15 17:51:21.599] [LB] Nova conexão ([::1]:47882) -> Servidor :18082 [política=least-connections, conexões=1]
+[2026-11-15 17:51:21.600] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78948}
+[2026-11-15 17:51:21.600] [Cliente 78948] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.600] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 78947}
+[2026-11-15 17:51:21.600] [Cliente 78947] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.614] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78808}
+[2026-11-15 17:51:21.614] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #6 do cliente 78809}
+[2026-11-15 17:51:21.614] [Cliente 78809] Req #6 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.614] [Cliente 78808] Req #6 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.901] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78948}
+[2026-11-15 17:51:21.901] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 78947}
+[2026-11-15 17:51:21.901] [Cliente 78947] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:21.901] [Cliente 78948] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.015] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78809}
+[2026-11-15 17:51:22.015] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #7 do cliente 78808}
+[2026-11-15 17:51:22.015] [Cliente 78808] Req #7 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.015] [Cliente 78809] Req #7 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.202] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78947}
+[2026-11-15 17:51:22.202] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 78948}
+[2026-11-15 17:51:22.202] [Cliente 78947] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.202] [Cliente 78948] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.416] [Servidor :18083] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78809}
+[2026-11-15 17:51:22.416] [Servidor :18082] Requisição atendida (conexões ativas: 2): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #8 do cliente 78808}
+[2026-11-15 17:51:22.416] [Cliente 78809] Req #8 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.416] [Cliente 78809] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:22.416] [Cliente 78808] Req #8 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.416] [Cliente 78808] Conexão finalizada após 8 requisições (3s).
+[2026-11-15 17:51:22.503] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78947}
+[2026-11-15 17:51:22.503] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 78948}
+[2026-11-15 17:51:22.503] [Cliente 78948] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.503] [Cliente 78948] Conexão finalizada após 4 requisições (1s).
+[2026-11-15 17:51:22.503] [Cliente 78947] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:22.503] [Cliente 78947] Conexão finalizada após 4 requisições (1s).
+[2026-11-15 17:51:24.285] [MONITOR] Servidor na porta 18081 está DOWN. Subindo novamente...
+[2026-11-15 17:51:24.287] [Servidor :18081] Ativo e ouvindo...
+[2026-11-15 17:51:24.486] [MONITOR] Servidor :18081 mudou status: DOWN -> UP (conexões=0)
+[2026-11-15 17:51:24.528] [CENARIO] Disparando Onda 3 (após auto-recuperação de :18081): 3 clientes (2s)
+[2026-11-15 17:51:24.721] [Cliente 79086] Conectado ao Load Balancer na porta :8080 por 2s...
+[2026-11-15 17:51:24.721] [Cliente 79087] Conectado ao Load Balancer na porta :8080 por 2s...
+[2026-11-15 17:51:24.721] [Cliente 79088] Conectado ao Load Balancer na porta :8080 por 2s...
+[2026-11-15 17:51:24.721] [LB] Nova conexão ([::1]:47892) -> Servidor :18083 [política=least-connections, conexões=0]
+[2026-11-15 17:51:24.721] [LB] Nova conexão ([::1]:47890) -> Servidor :18081 [política=least-connections, conexões=0]
+[2026-11-15 17:51:24.721] [LB] Nova conexão ([::1]:47894) -> Servidor :18082 [política=least-connections, conexões=0]
+[2026-11-15 17:51:24.722] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 79087}
+[2026-11-15 17:51:24.722] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 79088}
+[2026-11-15 17:51:24.722] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #1 do cliente 79086}
+[2026-11-15 17:51:24.722] [Cliente 79087] Req #1 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:24.722] [Cliente 79088] Req #1 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:24.722] [Cliente 79086] Req #1 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.122] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 79087}
+[2026-11-15 17:51:25.123] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 79088}
+[2026-11-15 17:51:25.123] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #2 do cliente 79086}
+[2026-11-15 17:51:25.123] [Cliente 79087] Req #2 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.123] [Cliente 79088] Req #2 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.123] [Cliente 79086] Req #2 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.524] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 79087}
+[2026-11-15 17:51:25.524] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 79088}
+[2026-11-15 17:51:25.524] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #3 do cliente 79086}
+[2026-11-15 17:51:25.524] [Cliente 79086] Req #3 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.524] [Cliente 79088] Req #3 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.524] [Cliente 79087] Req #3 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.925] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 79086}
+[2026-11-15 17:51:25.925] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 79088}
+[2026-11-15 17:51:25.925] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #4 do cliente 79087}
+[2026-11-15 17:51:25.925] [Cliente 79088] Req #4 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.925] [Cliente 79086] Req #4 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:25.925] [Cliente 79087] Req #4 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:26.326] [Servidor :18082] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 79088}
+[2026-11-15 17:51:26.326] [Servidor :18081] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 79086}
+[2026-11-15 17:51:26.326] [Servidor :18083] Requisição atendida (conexões ativas: 1): &{Tipo:REQ Porta:8080 Conteudo:Mensagem #5 do cliente 79087}
+[2026-11-15 17:51:26.326] [Cliente 79087] Req #5 <- Servidor :18083 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:26.326] [Cliente 79086] Req #5 <- Servidor :18081 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:26.326] [Cliente 79088] Req #5 <- Servidor :18082 | KamehamehameHAAAAAAAAAA
+[2026-11-15 17:51:26.326] [Cliente 79087] Conexão finalizada após 5 requisições (2s).
+[2026-11-15 17:51:26.326] [Cliente 79088] Conexão finalizada após 5 requisições (2s).
+[2026-11-15 17:51:26.326] [Cliente 79086] Conexão finalizada após 5 requisições (2s).
+[2026-11-15 17:51:26.329] [CENARIO] Finalizando Cenario 3 - Falha e Auto-Recuperacao (duração=7.26s)
+[2026-11-15 17:51:26.330] [LB] Encerrando...
+[2026-11-15 17:51:26.330] [MONITOR] Encerrando...
+[2026-11-15 17:51:26.330] [LB] Encerrado.
+[2026-11-15 17:51:26.330] [Servidor :18083] Encerrando...
+[2026-11-15 17:51:26.330] [Servidor :18083] Encerrado.
+[2026-11-15 17:51:26.330] [Servidor :18081] Encerrando...
+[2026-11-15 17:51:26.330] [Servidor :18081] Encerrado.
+[2026-11-15 17:51:26.330] [Servidor :18082] Encerrando...
+[2026-11-15 17:51:26.330] [Servidor :18082] Encerrado.
+[2026-11-15 17:51:26.331] [MONITOR] Encerrado.

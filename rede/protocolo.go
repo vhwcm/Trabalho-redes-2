@@ -8,6 +8,7 @@ import (
 const (
 	TipoRequisicao = "REQ"
 	TipoResposta   = "RES"
+	TipoPing       = "PING"
 )
 
 type Mensagem struct {
