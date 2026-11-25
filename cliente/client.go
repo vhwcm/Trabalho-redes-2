@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"math/rand/v2"
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -13,6 +14,7 @@ import (
 
 func main() {
 	portaLB := flag.Int("port", 8080, "Porta TCP do Load Balancer")
+	host := flag.String("host", "localhost", "IP ou nome do Load Balancer")
 	duracaoSeg := flag.Int("k", 5, "Duração fixa em segundos que o cliente permanece conectado")
 	duracaoMin := flag.Int("k-min", 0, "Duração mínima em segundos (opcional, para duração variável)")
 	duracaoMax := flag.Int("k-max", 0, "Duração máxima em segundos (opcional, para duração variável)")
@@ -44,9 +46,14 @@ func main() {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 
-	conn, err := rede.ConectarTCPTimeout(*portaLB, 3*time.Second)
+	// monta "ip:porta"
+	endereco := fmt.Sprintf("%s:%d", *host, *portaLB)
+
+	// net.DialTimeout aceita qualquer endereco (o do rede so aceita localhost)
+	conn, err := net.DialTimeout("tcp", endereco, 3*time.Second)
+
 	if err != nil {
-		rede.LogErro(tag, "Erro ao conectar ao Load Balancer (:%d): %v", *portaLB, err)
+		rede.LogErro(tag, "Erro ao conectar ao Load Balancer (:%s): %v", endereco, err)
 		os.Exit(1)
 	}
 	defer conn.Close()
@@ -68,6 +75,9 @@ func main() {
 			rede.LogErro(tag, "Erro ao enviar req #%d: %v", seq, err)
 			return
 		}
+
+		//se a resposta nao chegar em 5 segundos, a leitura da erro em vez de travar
+		conn.SetReadDeadline(time.Now().Add(5*time.Second))
 
 		resp, err := rede.LerMensagem(conn)
 		if err != nil {

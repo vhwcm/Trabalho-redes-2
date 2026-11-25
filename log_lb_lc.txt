@@ -1,0 +1,5 @@
+[2026-11-25 16:24:17.799] [LB] Ativo na porta :8080 | Política: least-connections | Monitor: :9000
+[2026-11-25 16:24:53.904] [LB] Nova conexão (127.0.0.1:41280) -> Servidor :8081 [política=least-connections, conexões=0]
+[2026-11-25 16:24:57.559] [LB] Nova conexão (127.0.0.1:41284) -> Servidor :8082 [política=least-connections, conexões=0]
+[2026-11-25 16:25:00.864] [LB] Nova conexão (127.0.0.1:41294) -> Servidor :8083 [política=least-connections, conexões=0]
+[2026-11-25 16:25:17.665] [LB] Nova conexão (127.0.0.1:54522) -> Servidor :8083 [política=least-connections, conexões=0]
