@@ -1,0 +1,1 @@
+rrIndex guarda "de quem é a vez" no Round-Robin e é compartilhado por todas as goroutines. Como várias podem mexer ao mesmo tempo, ele é protegido por rrMu, um mutex (trava). Quem quer mexer faz Lock(), mexe e faz Unlock(). Se outra goroutine chegar no meio, espera. Variáveis sem valor inicial começam com o "zero" do tipo (rrIndex começa em 0).

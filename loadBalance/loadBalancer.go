@@ -40,6 +40,8 @@ var (
 	rrIndex int
 )
 
+
+// tem mais de um tipo de entrada certa
 func normalizarPolitica(valor string) (string, error) {
 	switch strings.ToLower(strings.TrimSpace(valor)) {
 	case "round-robin", "round_robin", "rr":
@@ -50,6 +52,9 @@ func normalizarPolitica(valor string) (string, error) {
 		return "", fmt.Errorf("política inválida: %q (use 'round-robin' ou 'least-connections')", valor)
 	}
 }
+
+// consultar tabela concecta no monitor, manda "GET_STATUS" e recebe um json com 
+// os servidores, o status e as conexoes de cada um
 
 func consultarTabela() (*TabelaServidores, error) {
 	conn, err := rede.ConectarTCPTimeout(portaMonitor, 2*time.Second)
@@ -69,11 +74,13 @@ func consultarTabela() (*TabelaServidores, error) {
 		return nil, err
 	}
 
+	// espera a mensagem do monitor
 	resp, err := rede.LerMensagem(conn)
 	if err != nil {
 		return nil, err
 	}
 
+	// preenche uma tabela com a resposta do monitor
 	var tabela TabelaServidores
 	if err := json.Unmarshal([]byte(resp.Conteudo), &tabela); err != nil {
 		return nil, fmt.Errorf("erro ao decodificar tabela de servidores: %w", err)
@@ -82,7 +89,11 @@ func consultarTabela() (*TabelaServidores, error) {
 	return &tabela, nil
 }
 
+
 func notificarConexao(comando string, portaServidor int) {
+
+	// nao retorna nada ,se nao conseguir falar com o monitor,apenas sai em silencio
+	//Se o monitor estiver fora, o contador nao atualiza nada e ninguem eh avisado
 	conn, err := rede.ConectarTCPTimeout(portaMonitor, 1*time.Second)
 	if err != nil {
 		return
@@ -91,6 +102,7 @@ func notificarConexao(comando string, portaServidor int) {
 
 	_ = conn.SetDeadline(time.Now().Add(1 * time.Second))
 
+	//informa o monitor que houve uma conexao
 	msg := &rede.Mensagem{
 		Tipo:     rede.TipoRequisicao,
 		Porta:    portaMonitor,
@@ -101,6 +113,8 @@ func notificarConexao(comando string, portaServidor int) {
 	}
 }
 
+// filtra so os servidores UP e ordena por porta
+// gira a lista com um indice global (rrIndex), que eh o Round-Robin
 func ordenarCandidatos(servidores []*ServidorStatus, politica string) []*ServidorStatus {
 	var ativos []*ServidorStatus
 	for _, s := range servidores {
@@ -113,15 +127,18 @@ func ordenarCandidatos(servidores []*ServidorStatus, politica string) []*Servido
 		return nil
 	}
 
+	//ordena as portas
 	sort.Slice(ativos, func(i, j int) bool {
 		return ativos[i].Porta < ativos[j].Porta
 	})
 
+	// incrementa o indice global para a proxima chamada
 	rrMu.Lock()
 	start := rrIndex % len(ativos)
 	rrIndex++
 	rrMu.Unlock()
 
+	//nao entendi essa parte direito
 	rotacionados := make([]*ServidorStatus, 0, len(ativos))
 	rotacionados = append(rotacionados, ativos[start:]...)
 	rotacionados = append(rotacionados, ativos[:start]...)
@@ -135,6 +152,8 @@ func ordenarCandidatos(servidores []*ServidorStatus, politica string) []*Servido
 	return rotacionados
 }
 
+//retorna a conexao, o servidor escolhido e o erro.Percorre os candidatos em ordem 
+//e retorna o primeiro que aceitar
 func conectarServidorDisponivel(candidatos []*ServidorStatus) (net.Conn, *ServidorStatus, error) {
 	for _, s := range candidatos {
 		conn, err := rede.ConectarTCPTimeout(s.Porta, 2*time.Second)
@@ -146,6 +165,7 @@ func conectarServidorDisponivel(candidatos []*ServidorStatus) (net.Conn, *Servid
 	return nil, nil, errors.New("nenhum servidor UP aceitou conexão")
 }
 
+//sync.waitgroup, todas as goroutines compartilham o mesmo contador
 func atenderCliente(connClient net.Conn, portaLB int, politica string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	defer connClient.Close()
@@ -187,9 +207,16 @@ func atenderCliente(connClient net.Conn, portaLB int, politica string, wg *sync.
 	rede.Log("LB", "Nova conexão (%s) -> Servidor :%d [política=%s, conexões=%d]",
 		connClient.RemoteAddr().String(), escolhido.Porta, politica, escolhido.Conexoes)
 
+	//avisa o monitor que ha uma conexao a mais e agenda o aviso de "menos uma" pra quandp
+	// a funcao terminar
 	notificarConexao("INC_CONEXAO", escolhido.Porta)
 	defer notificarConexao("DEC_CONEXAO", escolhido.Porta)
 
+
+	//1-le uma mensagem do cliente
+	// 2-encaminha para o servidor
+	// 3- le a resposta do servidor
+	// 4-devolve para o cliente
 	for {
 		msg, err := rede.LerMensagem(connClient)
 		if err != nil {
@@ -245,6 +272,7 @@ func main() {
 
 	rede.Log("LB", "Ativo na porta :%d | Política: %s | Monitor: :%d", *portaLB, politica, portaMonitor)
 
+	// encerramento com ctrl c
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
 
@@ -268,6 +296,7 @@ func main() {
 		go atenderCliente(conn, *portaLB, politica, &wg)
 	}
 
+	// bloqeia ate o contador chegar a zero, ou seja, ate todos os clientes terminarem
 	wg.Wait()
 	rede.Log("LB", "Encerrado.")
 }
